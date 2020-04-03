@@ -1,10 +1,10 @@
 import React from 'react';
-import '../styles/Selects.css'
+import styles from './Select.module.css';
 
 const FilterSelect = (props) => {
     return (
         <div className="filter_genres">
-            <select
+            <select className={styles.select}
 
                 onChange={(e) => {
                     const target = e.target;

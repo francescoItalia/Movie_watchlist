@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import DetailsButton from "./DetailsButton";
-import ToggleButton from './ToggleButton';
-import "../styles/Movie.css";
-import defaultImg from '../404-error-for-img.gif'
+import React, { Component } from 'react';
+import DetailsButton from '../buttons/DetailsButton';
+import ToggleButton from '../buttons/ToggleButton';
+import styles from './Movie.module.css';
+import defaultImg from '../../404-error-for-img.gif'
 
 class Movie extends Component {
     state = {
@@ -10,10 +10,10 @@ class Movie extends Component {
     };
     render() {
         return (
-            <div className="movie">
-                <figure>
-                    <div className="img_button_container">
-                        <img onError={this.addDefaultSrc}
+            <div className={styles.movie}>
+                <figure className={styles.figure}>
+                    <div className={styles.img_button_container}>
+                        <img className={styles.img} onError={this.addDefaultSrc}
                             src={this.props.movie.posterUrl}
                             alt={`${this.props.movie.title}`}
                         />
@@ -28,7 +28,7 @@ class Movie extends Component {
                             isAdded={this.props.listType === 'Favourite' && true}
                         />
                     </div>
-                    <figcaption className={this.state.detailsShown ? "show" : "hide"}>
+                    <figcaption className={`${styles.figcaption} ${this.state.detailsShown ? styles.show : styles.hide}`}>
                         <ul>
                             <li>
                                 <span>Title: </span>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Movie from './Movie';
-import FilterSelect from './FilterSelect';
+import FilterSelect from '../selects/FilterSelect';
+import styles from './MovieList.module.css'
 
 class MovieList extends Component {
     render() {
@@ -14,7 +15,7 @@ class MovieList extends Component {
                         filterMovies={this.props.filterMovies}
                     />
                 }
-                <div className='movies_container'>
+                <div className={styles.movies_container}>
                     {this.props.movies.map((el, i) => {
                         return (
                             <Movie

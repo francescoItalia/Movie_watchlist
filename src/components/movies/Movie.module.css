@@ -1,0 +1,42 @@
+.movie {
+    margin-bottom: 25px;
+    clear: left;
+    margin:5px
+  }
+  
+  .figure {
+    margin: 0;
+    border: 1px solid #dbdbdb;
+    border-radius: 10px 10px 0 0;
+    width: max-content;
+  }
+  
+  .img_button_container {
+    position: relative;
+  }
+  
+  .img {
+    width: 200px;
+    height: 300px;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .show {
+    display: block;
+  }
+  
+  .hide {
+    display: none;
+  }
+  
+  .figcaption ul {
+    list-style-type: none;
+    margin: 5px 0;
+    padding: 0;
+    width: 200px;
+  }
+  
+  span {
+    font-weight: 600;
+  }
+  

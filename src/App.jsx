@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import './App.css';
 
-import ManualMoviePicker from './components/ManualMoviePicker';
-import RandomMoviePicker from './components/RandomMoviePicker';
+import ManualMoviePicker from './components/routes/ManualMoviePicker';
+import RandomMoviePicker from './components/routes/RandomMoviePicker';
 
 
 class App extends Component {

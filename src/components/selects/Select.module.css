@@ -1,4 +1,4 @@
-select {
+.select {
     font-size: 16px;
     font-family: sans-serif;
     font-weight: 700;
@@ -22,20 +22,20 @@ select {
     background-position: right .7em top 50%, 0 0;
     background-size: .65em auto, 100%;
 }
-select::-ms-expand {
+.select::-ms-expand {
     display: none;
 }
-select:hover {
+.select:hover {
     border-color: #888;
 }
-select:focus {
+.select:focus {
     border-color: #aaa;
     box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
     box-shadow: 0 0 0 3px -moz-mac-focusring;
     color: #222; 
     outline: none;
 }
-select option {
+.select option {
     font-weight:normal;
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import RandomSelect from './RandomSelect';
-import Movie from './Movie';
+import RandomSelect from '../selects/RandomSelect';
+import Movie from '../movies/Movie';
 
 class RandomPicker extends Component {
 

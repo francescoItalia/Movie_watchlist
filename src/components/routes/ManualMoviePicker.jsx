@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import MovieList from './MovieList';
+import MovieList from '../movies/MovieList';
+import styles from './ManualMoviePicker.module.css';
 
 class FavouriteMovies extends Component {
     render() {
 
         return (
-            <div className="lists_container">
+            <div className={styles.lists_container}>
                 <MovieList
                     listType='Favourite'
                     movies={this.props.favouriteMovies}

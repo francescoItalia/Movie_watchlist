@@ -1,10 +1,11 @@
 import React from 'react';
+import styles from './ToggleButton.module.css';
 
 const ToggleMovieButton = (props) => {
     // console.log(props);
 
     return (
-        <button className={props.isAdded ? "remove toggle_button" : "add toggle_button"}
+        <button className={props.isAdded ? `${styles.button} ${styles.remove}` : `${styles.button} ${styles.add}`}
             type="button"
             onClick={() => { props.toggleMovie(props.isAdded, props.movie.id) }}
         >
