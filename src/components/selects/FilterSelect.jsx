@@ -12,7 +12,7 @@ const FilterSelect = (props) => {
                     props.filterMovies(value)
                 }}
             >
-                <option defaultValue value="">All Genres</option>
+                <option defaultValue value="">{props.filterBy ? props.filterBy : 'All Genres'}</option>
                 {props.genres.map((el, i) => {
                     return <option key={i} value={el}>{el}</option>
                 })}

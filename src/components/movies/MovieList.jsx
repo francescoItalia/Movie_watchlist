@@ -13,6 +13,7 @@ class MovieList extends Component {
                     <FilterSelect
                         genres={this.props.genres}
                         filterMovies={this.props.filterMovies}
+                        filterBy={this.props.filterBy}
                     />
                 }
                 <div className={styles.movies_container}>

@@ -7,8 +7,9 @@ import {
 } from "react-router-dom";
 import './App.css';
 
-import ManualMoviePicker from './components/routes/ManualMoviePicker';
+import AllMovies from './components/routes/AllMovies';
 import RandomMoviePicker from './components/routes/RandomMoviePicker';
+import FavouriteMovies from './components/routes/FavouriteMovies';
 
 
 class App extends Component {
@@ -56,7 +57,10 @@ class App extends Component {
               <nav>
                 <ul>
                   <li>
-                    <Link to="/">Home</Link>
+                    <Link to="/">All Movies</Link>
+                  </li>
+                  <li>
+                    <Link to="/favourites">Your List</Link>
                   </li>
                   <li>
                     <Link to="/random-picker">Random Picker</Link>
@@ -74,12 +78,19 @@ class App extends Component {
                   randomMovie={this.state.randomMovie}
                 />
               </Route>
-              <Route path="/">
-                <ManualMoviePicker
+              <Route path="/favourites">
+                <FavouriteMovies
                   toggleMovie={this.toggleMovie} // ln: 78
-                  filterMovies={this.setFilterValue} // ln: 119
                   genres={this.state.genres}
                   favouriteMovies={this.state.favouriteMovies}
+                />
+              </Route>
+              <Route path="/">
+                <AllMovies
+                  toggleMovie={this.toggleMovie} // ln: 78
+                  filterMovies={this.setFilterValue} // ln: 119
+                  filterBy={this.state.filterBy}
+                  genres={this.state.genres}
                   allMovies={
                     this.state.filterBy ?
                       this.filterMovies(this.state.filterBy) : // ln: 119
@@ -94,7 +105,7 @@ class App extends Component {
   }
   // Toggle a movie in or out Favourites.
   // It takes a boolean indicating if the move is already added as favourite and the movie id.
-  // Sent down to both RandomMoviePicker.jsx and ManualMoviePicker.
+  // Sent down to both RandomMoviePicker.jsx and AllMovies.
   // Called by ToggleButton.jsx, rendered by Movie.jsx
   // Called when clicking on ToggleButton.jsx ('Add', or 'Remove')
   toggleMovie = (movieIsAdded, movieId) => {
