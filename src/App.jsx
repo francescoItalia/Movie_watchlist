@@ -2,14 +2,15 @@ import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import './App.css';
 
 import AllMovies from './components/routes/AllMovies';
 import RandomMoviePicker from './components/routes/RandomMoviePicker';
 import FavouriteMovies from './components/routes/FavouriteMovies';
+import ResponsiveNav from './components/nav/ResponsiveNav';
+import routes from './data/navItems.json'
 
 
 class App extends Component {
@@ -18,8 +19,10 @@ class App extends Component {
     allMovies: [],
     genres: [],
     favouriteMovies: [],
-    filterBy: '',
-    randomMovie: {}
+    genreFilter: '',
+    anyFieldFilter: '',
+    randomMovie: {},
+    showNav: false
   }
 
   componentDidMount = () => {
@@ -53,21 +56,13 @@ class App extends Component {
       this.state.isFetching ? 'Fetching Data' : (
         <Router>
           <div>
-            <header>
-              <nav>
-                <ul>
-                  <li>
-                    <Link to="/">All Movies</Link>
-                  </li>
-                  <li>
-                    <Link to="/favourites">Your List</Link>
-                  </li>
-                  <li>
-                    <Link to="/random-picker">Random Picker</Link>
-                  </li>
-                </ul>
-              </nav>
-            </header>
+            <ResponsiveNav
+              routes={routes}
+              toggleMobileNav={this.toggleMobileNav}
+              showNav={this.state.showNav}
+              filterMovies={this.setFilterValue}
+              moviesAdded={this.state.favouriteMovies.length ? this.state.favouriteMovies.length : undefined}
+            />
             <Switch>
               <Route path="/random-picker">
                 <RandomMoviePicker
@@ -80,22 +75,23 @@ class App extends Component {
               </Route>
               <Route path="/favourites">
                 <FavouriteMovies
-                  toggleMovie={this.toggleMovie} // ln: 78
+                  toggleMovie={this.toggleMovie} // ln: 108
                   genres={this.state.genres}
                   favouriteMovies={this.state.favouriteMovies}
                 />
               </Route>
               <Route path="/">
                 <AllMovies
-                  toggleMovie={this.toggleMovie} // ln: 78
-                  filterMovies={this.setFilterValue} // ln: 119
-                  filterBy={this.state.filterBy}
+                  toggleMovie={this.toggleMovie} // ln: 108
+                  filterMovies={this.setFilterValue} // ln: 145
+                  genreFilter={this.state.genreFilter}
                   genres={this.state.genres}
                   allMovies={
-                    this.state.filterBy ?
-                      this.filterMovies(this.state.filterBy) : // ln: 119
+                    this.state.genreFilter || this.state.anyFieldFilter ?
+                      this.filterMovies() : // ln: 152
                       this.state.allMovies
                   }
+                  toggleMobileNav={this.toggleMobileNav} // ln: 191
                 />
               </Route>
             </Switch>
@@ -139,21 +135,40 @@ class App extends Component {
     this.setState({ allMovies, favouriteMovies, randomMovie: {} })
   }
 
-  // Updates the filterBy property in state.
-  // Called when filtering through FilterSelect.jsx. It takes the string resulting from selection as argument.
-  // Passed down through manualFilmPicker.js and MovieList.jsx
-  /* When filterValue exists, it is used by filterMovies method (ln: 127) 
-     to filter allMovies array before passing it down to manual and random movie picker components */
-  setFilterValue = (filterValue) => {
-    // Update the state with Favourites
-    this.setState({ filterBy: filterValue });
+  // Updates the filter properties in state.
+  // Called when filtering through FilterSelect.jsx or SearchBar.jsx. 
+  // Arguments: type of filtering and the string resulting from selection or typing.
+  // Passed down through AllMovies.jsx and ResponsiveNav.jsx
+  /* When filterValue exists, it is used by filterMovies method (ln: 151) 
+     to filter allMovies array before passing it down to components */
+  setFilterValue = (filterType, filterValue) => {
+    if (filterType === 'genre')
+      this.setState({ genreFilter: filterValue });
+    if (filterType === 'search')
+      this.setState({ anyFieldFilter: filterValue });
   }
 
-  filterMovies = (filterValue) => {
-    // Filter the Favourite Movies Array and the all Movies array
-    const filteredMovies = this.state.allMovies.filter(movie => {
-      return movie.genres.indexOf(filterValue) > -1;
-    });
+  filterMovies = () => {
+    // Filter the All Movies array if th genere select was used
+    let filteredMovies = [...this.state.allMovies];
+    if (this.state.genreFilter) {
+      filteredMovies = filteredMovies.filter(movie => {
+        return movie.genres.indexOf(this.state.genreFilter) > -1;
+      });
+    }
+
+    // Filter the All Movies or the array filtered by genre if the Search Bar was used
+    if (this.state.anyFieldFilter) {
+      filteredMovies = filteredMovies.filter(movie => {
+        // Object.values return the movie object keys' values in an array
+        return Object.values(movie).some(movieData => {
+          // Match each movie info against the inputted text
+          const match = new RegExp(this.state.anyFieldFilter, 'gi');
+          return match.test(movieData);
+        });
+      })
+    }
+
     return filteredMovies;
   }
 
@@ -176,6 +191,10 @@ class App extends Component {
 
     // Set the stat
     this.setState({ randomMovie })
+  }
+
+  toggleMobileNav = () => {
+    this.setState({ showNav: !this.state.showNav })
   }
 }
 

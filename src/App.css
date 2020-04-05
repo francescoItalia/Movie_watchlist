@@ -1,39 +1,15 @@
-header {
-  margin-bottom: 20px;
-  height: 80px;
-  color: white;
-  background: #1d77ce;
-}
-
-nav {
-  color: white;
-  width: 40%;
-}
-
-ul {
-  list-style-type: none;
-}
-
-nav ul {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  align-items: center;
-  height: 80px;
-}
-
 a {
   font-size: 2em;
   text-decoration: none;
 }
 
 a:visited {
-  color: white;
+  color: #F3F8FC;
 }
 
 h2 {
   display: inline-block;
-  color: darkgray;
+  color: #3C434D;
   padding: 25px 25px;
   font-size: 2.2rem;
   font-weight: 700;

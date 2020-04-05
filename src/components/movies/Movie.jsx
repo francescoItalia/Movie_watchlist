@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import DetailsButton from '../buttons/DetailsButton';
 import ToggleButton from '../buttons/ToggleButton';
 import styles from './Movie.module.css';
-import defaultImg from '../../404-error-for-img.gif'
+import defaultImg from '../../static/404-error-for-img.gif'
 
 class Movie extends Component {
     state = {

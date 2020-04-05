@@ -7,20 +7,26 @@ const FilterSelect = (props) => {
             <select className={styles.select}
 
                 onChange={(e) => {
-                    const target = e.target;
-                    const value = target.value;
-                    props.filterMovies(value)
+                    props.filterMovies('genre', e.target.value)
                 }}
             >
-                <option defaultValue value="">{props.filterBy ? props.filterBy : 'All Genres'}</option>
+                {/* If the filter was used, then give the last filtered value as first option */}
+                {props.genreFilter ?
+                    <>
+                        <option value="">{props.genreFilter}</option>
+                        <option value="">-- All Genres --</option>
+                    </> :
+                    <>
+                        <option value="">-- All Genres --</option>
+                    </>
+                }
+
                 {props.genres.map((el, i) => {
                     return <option key={i} value={el}>{el}</option>
                 })}
             </select>
         </div>
-    );
-
-
+    )
 }
 
 export default FilterSelect;

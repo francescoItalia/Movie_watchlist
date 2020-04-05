@@ -1,0 +1,11 @@
+[
+    {
+        "/": "All Movies"
+    },
+    {
+        "/favourites": "Your List"
+    },
+    {
+        "/random-picker": "Random Picker"
+    }
+]

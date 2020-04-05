@@ -1,0 +1,58 @@
+.logo_container {
+    margin-right: auto;
+}
+
+.mobileLogo{
+    width: 50px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.mobileLogo img {
+    width: 100%;
+    margin-right: 10px;
+}
+
+.mobileLogo[data-added]::before {
+    font-size: 0.8em;
+    position: absolute;
+    top: 0;
+    right: -8px;
+    content: attr(data-added);
+    font-weight: bold;
+    background-color: red;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    line-height: 1.3em;
+    border-radius: 50%;
+}
+
+i {
+    border: solid #DDDDDF;
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 4px;
+  }
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.logo {
+    display: none;
+}
+
+
+@media screen and (min-width: 850px) {
+    .mobileLogo{
+        display: none;
+    }
+    
+    .logo {
+        display: inline;
+    }
+}

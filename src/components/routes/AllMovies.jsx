@@ -13,7 +13,7 @@ class FavouriteMovies extends Component {
                     genres={this.props.genres}
                     toggleMovie={this.props.toggleMovie}
                     filterMovies={this.props.filterMovies}
-                    filterBy={this.props.filterBy}
+                    genreFilter={this.props.genreFilter}
                 />
             </div>
         );
