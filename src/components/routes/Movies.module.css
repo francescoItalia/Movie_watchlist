@@ -1,4 +1,10 @@
 .lists_container{
-    width: 80%;
+    width: 95%;
     margin: 0 auto;
+  }
+
+  @media screen and (mim-width: 850px) {
+    .lists_container{
+      width: 80%;
+    }
   }

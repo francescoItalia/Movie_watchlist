@@ -7,7 +7,10 @@ const ToggleMovieButton = (props) => {
     return (
         <button className={props.isAdded ? `${styles.button} ${styles.remove}` : `${styles.button} ${styles.add}`}
             type="button"
-            onClick={() => { props.toggleMovie(props.isAdded, props.movie.id) }}
+            onClick={(e) => {
+                e.stopPropagation();
+                props.toggleMovie(props.isAdded, props.movie.id)
+            }}
         >
             {props.isAdded ? "Remove" : "Add"}
         </button>

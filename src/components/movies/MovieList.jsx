@@ -24,6 +24,7 @@ class MovieList extends Component {
                                 movie={el}
                                 listType={this.props.listType}
                                 toggleMovie={this.props.toggleMovie}
+                                showExpandedMovie={this.props.showExpandedMovie}
                             />
                         )
                     })}

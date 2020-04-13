@@ -10,11 +10,10 @@ a:visited {
 h2 {
   display: inline-block;
   color: #3C434D;
-  padding: 25px 25px;
-  font-size: 2.2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   text-shadow: -40px 26px 20px lightgrey;
-  margin: 0 auto;
+  margin: 20px 10px 10px;
 }
 
 

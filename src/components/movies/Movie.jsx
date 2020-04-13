@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DetailsButton from '../buttons/DetailsButton';
 import ToggleButton from '../buttons/ToggleButton';
+import AddToFavourite from '../buttons/AddToFavourite';
 import styles from './Movie.module.css';
 import defaultImg from '../../static/404-error-for-img.gif'
 
@@ -10,7 +11,8 @@ class Movie extends Component {
     };
     render() {
         return (
-            <div className={styles.movie}>
+            <div className={styles.movie} onClick={() => this.props.showExpandedMovie(this.props.movie)}>
+                <AddToFavourite />
                 <figure className={styles.figure}>
                     <div className={styles.img_button_container}>
                         <img className={styles.img} onError={this.addDefaultSrc}

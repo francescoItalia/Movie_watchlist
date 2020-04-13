@@ -3,7 +3,7 @@ import styles from './Select.module.css';
 
 const FilterSelect = (props) => {
     return (
-        <div className="filter_genres">
+        <div className={styles.filter_container}>
             <select className={styles.select}
 
                 onChange={(e) => {

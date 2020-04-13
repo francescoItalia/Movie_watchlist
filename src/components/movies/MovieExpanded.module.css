@@ -1,0 +1,51 @@
+.movieExpanded {
+    position: fixed;
+    background: #dbdbdb;
+    z-index: 2002;
+    top: 0;
+    left: calc(-50vw + 50%);
+    width: 100vw;
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+.figure {
+    box-shadow: rgba(0, 0, 0, 0.28) 0px 2px 8px;
+    border: 1px solid #dbdbdb;
+    border-radius: 10px;
+    margin: 90px 1.5em;
+}
+
+.img {
+    width: 100%;
+    object-fit: fill;
+    border-radius: 10px 10px 0 0;
+}
+
+.movieExpanded ul {
+    list-style-type: none;
+    margin: 1em 0.5em;
+    padding: 0;
+}
+
+.title {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.genres {
+    font-style: italic;
+    margin: 3px 0 15px 0;
+}
+
+.close {
+    position: absolute;
+    right: 5px;
+    top: 10px;
+}
+    
+.close:after {
+    position: relative;
+    content: "\274c";
+    font-size: 15px; 
+}

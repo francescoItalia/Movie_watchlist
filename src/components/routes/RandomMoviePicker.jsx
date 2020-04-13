@@ -3,10 +3,7 @@ import RandomSelect from '../selects/RandomSelect';
 import Movie from '../movies/Movie';
 
 class RandomPicker extends Component {
-
     render() {
-        // console.log(this.props);
-
         return (
             <>
                 <h1>Random Picker</h1>
