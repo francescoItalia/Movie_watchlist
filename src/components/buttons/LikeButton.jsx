@@ -4,21 +4,19 @@ import styles from './LikeButton.module.css';
 class LikeButton extends Component {
     render() {
         return (
-            <div
+            <div className={this.props.isFavourite
+                ? `${styles.svg_container} ${styles.favourite}`
+                : styles.svg_container}
                 onClick={(e) => {
                     e.stopPropagation();
                     this.props.toggleFavourites(this.props.id)
-                }}
-                className={this.props.isFavourite
-                    ? `${styles.svg_container} ${styles.favourite}`
-                    : styles.svg_container}
-            >
-                <div>
-                    <svg>
-                        <path d="m17.5 2.9c-2.1 0-4.1 1.3-5.4 2.8-1.6-1.6-3.8-3.2-6.2-2.7-1.5.2-2.9 1.2-3.6 2.6-2.3 4.1 1 8.3 3.9 11.1 1.4 1.3 2.8 2.5 4.3 3.6.4.3 1.1.9 1.6.9s1.2-.6 1.6-.9c3.2-2.3 6.6-5.1 8.2-8.8 1.5-3.4 0-8.6-4.4-8.6" stroke-linejoin="round">
-                        </path>
-                    </svg>
-                </div>
+                }}>
+                <svg className={styles.svg} viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
+                    <g className={styles.Group} fill-rule="evenodd" transform="translate(467 392)">
+                        <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" className={styles.heart} fill="#AAB8C2" />
+                        <circle className={styles.main_circ} fill="#E2264D" opacity="0" cx="29.5" cy="29.5" r="1.5" />
+                    </g>
+                </svg>
             </div>
         );
     }
