@@ -7,9 +7,9 @@ class MovieList extends Component {
     render() {
         return (
             <section>
-                <h2>{this.props.listType === 'All' ? 'All Movies' : 'Favourite Movies'}</h2>
+                <h2>{this.toTitleCase(this.props.listType)}</h2>
                 {/* If listType is All Movies, then show a filtering select */}
-                {this.props.listType === 'All' &&
+                {this.props.listType === 'all movies' &&
                     <FilterSelect
                         genres={this.props.genres}
                         filterMovies={this.props.filterMovies}
@@ -25,6 +25,7 @@ class MovieList extends Component {
                                 listType={this.props.listType}
                                 toggleMovie={this.props.toggleMovie}
                                 showExpandedMovie={this.props.showExpandedMovie}
+                                toggleFavourites={this.props.toggleFavourites}
                             />
                         )
                     })}
@@ -32,6 +33,12 @@ class MovieList extends Component {
             </section>
         );
     }
+
+    toTitleCase = (str) =>
+        str.replace(
+            /\w\S*/g,
+            (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+        )
 }
 
 export default MovieList;

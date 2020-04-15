@@ -15,6 +15,7 @@ class RandomPicker extends Component {
                     <Movie
                         movie={this.props.randomMovie}
                         toggleMovie={this.props.toggleMovie}
+                        toggleFavourites={this.toggleFavourites}
                     />
                 }
             </>

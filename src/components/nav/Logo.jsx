@@ -14,7 +14,7 @@ const Logo = (props) => {
             <div
                 className={styles.mobileLogo}
                 onClick={props.toggleMobileNav}
-                data-added={props.moviesAdded ? props.moviesAdded : undefined}
+                data-added={props.totalAdded > 0 ? props.totalAdded : undefined}
             >
                 <img
                     src={mobileLogo}

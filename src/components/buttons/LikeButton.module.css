@@ -1,0 +1,52 @@
+.svg_container {
+    width: 24px;
+    height: 24px;
+    padding: 5px;
+    display: inline-block;
+    background: #fffffff1;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 100;
+    top: 5px;
+    right: 5px;
+}
+
+.svg_container div {
+    margin-top: 1px;
+}
+
+.svg_container svg {
+    box-shadow: 2px rgba(0, 0, 0, 0.19);
+    fill: #C75C5C;
+    fill-opacity: 0;
+    stroke: rgb(34, 34, 34);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+.favourite {
+    background: #C75C5C;
+    animation-name: pulse;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.favourite svg {
+    stroke: white;
+}
+
+@keyframes pulse {
+    from {
+      transform: scale3d(1, 1, 1);
+    }
+  
+    50% {
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+  
+    to {
+      transform: scale3d(1, 1, 1);
+    }
+}

@@ -8,7 +8,7 @@ import './App.css';
 
 import AllMovies from './components/routes/AllMovies';
 import RandomMoviePicker from './components/routes/RandomMoviePicker';
-import FavouriteMovies from './components/routes/FavouriteMovies';
+import FilteredMovies from './components/routes/FilteredMovies';
 import ResponsiveNav from './components/nav/ResponsiveNav';
 import routes from './data/navItems.json'
 
@@ -18,36 +18,76 @@ class App extends Component {
     isFetching: true,
     allMovies: [],
     genres: [],
-    favouriteMovies: [],
+    preferences: {},
     genreFilter: '',
     anyFieldFilter: '',
     randomMovie: {},
     showNav: false
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     // fetch movies
     const url = 'https://raw.githubusercontent.com/wildcodeschoolparis/datas/master/movies.json';
-    fetch(url)
-      .then(res => res.json()).then(data => {
-        let allMovies = data.movies;
-        const genres = data.genres;
+    const fetchUrl = await fetch(url);
+    const data = await fetchUrl.json();
 
-        // Get favourites from the local storage if previously added
-        const favouriteMovies = JSON.parse(localStorage.getItem("favouriteMovies"));
+    let allMovies = data.movies;
+    const genres = data.genres;
+    let favourites = [];
+    let watchlist = [];
+    // Get preferences from the local storage if previously added
+    let preferences = JSON.parse(localStorage.getItem("preferences"));
 
-        if (favouriteMovies !== null) {
-          // Remove favourite movies from all movies
-          allMovies = allMovies.filter(function (objFromA) {
-            return !favouriteMovies.find(function (objFromB) {
-              return objFromA.id === objFromB.id
-            })
-          })
-          this.setState({ isFetching: false, allMovies, genres, favouriteMovies })
-        }
-        this.setState({ isFetching: false, allMovies, genres })
+    if (preferences !== null) {
+      // if there are movies in watchlist remove from all movies
+      if (preferences.watchlist.length) {
+        watchlist = preferences.watchlist;
+        allMovies = allMovies.filter((movieA) => {
+          return !watchlist.find((movieB) => movieA.id === movieB.id)
+        })
+      }
+      // if there are movies in favourites update all movies list
+      if (preferences.favourites.length) {
+        favourites = preferences.favourites;
+        allMovies.forEach((movieA, i) => {
+          const isFavourite = !!preferences.favourites.find((movieB) => movieA.id === movieB.id);
+          if (isFavourite) {
+            allMovies[i].isFavourite = true;
+          } else {
+            allMovies[i].isFavourite = false;
+          }
+        })
+      }
+    } else {
+      preferences = {
+        favourites,
+        watchlist
+      };
+    }
+
+    // use map() to perform a fetch and handle the response for each url
+    Promise.all(allMovies.map(async (movie, i) => {
+      try {
+        await fetch(movie.posterUrl)
+      } catch (e) {
+        // If fatching image poster url fails, use iMDb API
+        const baseiMDbAPIUrl = 'http://www.omdbapi.com/?apikey=218cd87&t=';
+        const formattedMovieTitle = encodeURI(movie.title);
+        const fetchNewImage = await fetch(baseiMDbAPIUrl + formattedMovieTitle);
+        const movieData = await fetchNewImage.json();
+        // Get the poster URL out of the movie object                 
+        const url = movieData.Poster;
+        allMovies[i].posterUrl = url;
+        console.log();
+
+        console.log(`new url: ${url}`)
+      }
+    }
+    ))
+      .then(data => {
+        console.log('Set State');
+        this.setState({ isFetching: false, allMovies, genres, preferences })
       })
-      .catch(err => console.error(err));
   }
 
   render() {
@@ -61,7 +101,8 @@ class App extends Component {
               toggleMobileNav={this.toggleMobileNav}
               showNav={this.state.showNav}
               filterMovies={this.setFilterValue}
-              moviesAdded={this.state.favouriteMovies.length ? this.state.favouriteMovies.length : undefined}
+              addedToWatchlist={this.state.preferences.watchlist.length}
+              addedToFavourites={this.state.preferences.favourites.length}
             />
             <Switch>
               <Route path="/random-picker">
@@ -71,13 +112,25 @@ class App extends Component {
                   toggleMovie={this.toggleMovie}
                   getRandomMovie={this.getRandomMovie}
                   randomMovie={this.state.randomMovie}
+                  toggleFavourites={this.toggleFavourites}
                 />
               </Route>
               <Route path="/favourites">
-                <FavouriteMovies
+                <FilteredMovies
                   toggleMovie={this.toggleMovie} // ln: 108
                   genres={this.state.genres}
-                  favouriteMovies={this.state.favouriteMovies}
+                  movies={this.state.preferences.favourites}
+                  listType="favourites"
+                  toggleFavourites={this.toggleFavourites}
+                />
+              </Route>
+              <Route path="/watchlist">
+                <FilteredMovies
+                  toggleMovie={this.toggleMovie} // ln: 108
+                  genres={this.state.genres}
+                  movies={this.state.preferences.watchlist}
+                  listType="watchlist"
+                  toggleFavourites={this.toggleFavourites}
                 />
               </Route>
               <Route path="/">
@@ -86,12 +139,14 @@ class App extends Component {
                   filterMovies={this.setFilterValue} // ln: 145
                   genreFilter={this.state.genreFilter}
                   genres={this.state.genres}
-                  allMovies={
+                  movies={
                     this.state.genreFilter || this.state.anyFieldFilter ?
                       this.filterMovies() : // ln: 152
                       this.state.allMovies
                   }
                   toggleMobileNav={this.toggleMobileNav} // ln: 191
+                  listType="all movies"
+                  toggleFavourites={this.toggleFavourites}
                 />
               </Route>
             </Switch>
@@ -99,40 +154,74 @@ class App extends Component {
         </Router>
       ));
   }
-  // Toggle a movie in or out Favourites.
-  // It takes a boolean indicating if the move is already added as favourite and the movie id.
+  // Toggle a movie in or out watchlist.
+  // It takes a boolean indicating if the movie is already added as favourite and the movie id.
   // Sent down to both RandomMoviePicker.jsx and AllMovies.
   // Called by ToggleButton.jsx, rendered by Movie.jsx
   // Called when clicking on ToggleButton.jsx ('Add', or 'Remove')
   toggleMovie = (movieIsAdded, movieId) => {
     // Get the Favourite Movies and the All Movies arrays
-    const favouriteMovies = [...this.state.favouriteMovies];
+    let preferences = this.state.preferences;
+    const watchlist = [...preferences.watchlist]
     const allMovies = [...this.state.allMovies];
 
     if (movieIsAdded) {
       // Find the index of movie to remove
-      const index = favouriteMovies.findIndex(el => el.id === movieId);
+      const index = watchlist.findIndex(el => el.id === movieId);
       // Add back to all movies and sort them back as original sort by id
-      allMovies.push(favouriteMovies[index])
+      allMovies.push(watchlist[index])
       allMovies.sort((a, b) => a.id - b.id);
       // Remove from favourite Array
-      favouriteMovies.splice(index, 1);
+      watchlist.splice(index, 1);
 
     } else {
       // Find the index of movie to add
       const index = allMovies.findIndex(el => el.id === movieId);
       // Add it to the favourite Movies and sort them back as original sort by id
-      favouriteMovies.push(allMovies[index])
-      favouriteMovies.sort((a, b) => a.id - b.id);
+      watchlist.push(allMovies[index])
+      watchlist.sort((a, b) => a.id - b.id);
       // Remove from all movies Array
       allMovies.splice(index, 1);
     }
 
-    // Save Favourites to local storage
-    localStorage.setItem("favouriteMovies", JSON.stringify(favouriteMovies));
+    // Save preference to local storage with updated watchlist
+    preferences = {
+      watchlist,
+      favourites: preferences.favourites
+    }
 
-    // Update the state with Favourites
-    this.setState({ allMovies, favouriteMovies, randomMovie: {} })
+    localStorage.setItem("preferences", JSON.stringify(preferences));
+
+    // Update the state with preferences
+    this.setState({ allMovies, preferences, randomMovie: {} })
+  }
+
+  toggleFavourites = (id) => {
+    let preferences = this.state.preferences;
+    const favourites = this.state.preferences.favourites;
+    const allMovies = this.state.allMovies;
+
+    // Get the index of the movie from all movies
+    const allMoviesIndex = allMovies.findIndex(movie => movie.id === id);
+    const favouriteIndex = favourites.findIndex(movie => movie.id === id);
+
+    if (allMovies[allMoviesIndex].isFavourite) {
+      allMovies[allMoviesIndex].isFavourite = false;
+      favourites.splice(favouriteIndex, 1)
+    } else {
+      allMovies[allMoviesIndex].isFavourite = true;
+      favourites.push(allMovies[allMoviesIndex])
+    }
+
+    // Save preference to local storage with updated watchlist
+    preferences = {
+      watchlist: preferences.watchlist,
+      favourites
+    }
+
+    localStorage.setItem("preferences", JSON.stringify(preferences));
+
+    this.setState({ allMovies, preferences })
   }
 
   // Updates the filter properties in state.
@@ -182,14 +271,14 @@ class App extends Component {
         this.state.allMovies.filter(movie => movie.genres.indexOf(genre) > -1) :
         this.state.allMovies;
 
-    // If no films are filtered they are all added in favourites
+    // If no films are filtered they are all added in watchlist
     // set  randomMovie to an empty object
     const randomMovie =
       filteredMovies.length ?
         filteredMovies[Math.floor(Math.random() * filteredMovies.length)] :
         {};
 
-    // Set the stat
+    // Set the state
     this.setState({ randomMovie })
   }
 

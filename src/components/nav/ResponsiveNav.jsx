@@ -10,7 +10,9 @@ class ResponsiveNav extends Component {
         return (
             <header className={styles.header}>
                 <div className={styles.container}>
-                    <Logo toggleMobileNav={this.props.toggleMobileNav} moviesAdded={this.props.moviesAdded} />
+                    <Logo
+                        toggleMobileNav={this.props.toggleMobileNav}
+                        totalAdded={this.props.addedToWatchlist + this.props.addedToFavourites} />
                     <SearchBar filterMovies={this.props.filterMovies} />
                 </div>
                 <nav className={`${styles.nav} ${this.props.showNav ? styles.show : styles.hide}`}>
@@ -22,8 +24,11 @@ class ResponsiveNav extends Component {
                                 to={routeData[0]}
                                 onClick={this.props.toggleMobileNav}
                                 data-added=
-                                {routeData[0] === '/favourites' ?
-                                    this.props.moviesAdded : undefined}
+                                {routeData[0] === '/watchlist' && this.props.addedToWatchlist > 0
+                                    ? this.props.addedToWatchlist
+                                    : routeData[0] === '/favourites' && this.props.addedToFavourites > 0
+                                        ? this.props.addedToFavourites
+                                        : undefined}
                             >
                                 {routeData[1]}
                             </Link>

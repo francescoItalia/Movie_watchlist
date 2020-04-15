@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import DetailsButton from '../buttons/DetailsButton';
 import ToggleButton from '../buttons/ToggleButton';
-import AddToFavourite from '../buttons/AddToFavourite';
+import LikeButton from '../buttons/LikeButton';
 import styles from './Movie.module.css';
-import defaultImg from '../../static/404-error-for-img.gif'
+import defaultImg from '../../static/404-error-for-img.gif';
 
 class Movie extends Component {
     state = {
@@ -12,23 +11,27 @@ class Movie extends Component {
     render() {
         return (
             <div className={styles.movie} onClick={() => this.props.showExpandedMovie(this.props.movie)}>
-                <AddToFavourite />
+                <LikeButton
+                    toggleFavourites={this.props.toggleFavourites}
+                    id={this.props.movie.id}
+                    isFavourite={this.props.movie.isFavourite}
+                />
                 <figure className={styles.figure}>
                     <div className={styles.img_button_container}>
                         <img className={styles.img} onError={this.addDefaultSrc}
                             src={this.props.movie.posterUrl}
                             alt={`${this.props.movie.title}`}
                         />
-                        {/* This button controls the toggling of each movie's details dropdown */}
-                        <DetailsButton
-                            detailsShown={this.state.detailsShown}
-                            toggleDetails={this.toggleDetails} // ln:59
-                        />
-                        <ToggleButton
-                            toggleMovie={this.props.toggleMovie}
-                            movie={this.props.movie}
-                            isAdded={this.props.listType === 'Favourite' && true}
-                        />
+                        {/* This button controls the toggling of each movie's details dropdown 
+                            Only load the button on All Movies and Whatchlist Pages
+                        */}
+                        {this.props.listType === 'watchlist' || this.props.listType === 'all movies'
+                            ? <ToggleButton
+                                toggleMovie={this.props.toggleMovie}
+                                movie={this.props.movie}
+                                isAdded={this.props.listType === 'watchlist' && true}
+                            /> : null
+                        }
                     </div>
                     <figcaption className={`${styles.figcaption} ${this.state.detailsShown ? styles.show : styles.hide}`}>
                         <ul>

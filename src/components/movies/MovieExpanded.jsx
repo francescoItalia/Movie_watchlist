@@ -6,16 +6,16 @@ class MovieExpanded extends Component {
     render() {
         return (
             <div className={styles.movieExpanded}>
+                <span className={styles.close} onClick={() => this.props.closeExpandedMovie()}></span>
                 <figure className={styles.figure}>
                     <div>
-                        <span className={styles.close} onClick={() => this.props.closeExpandedMovie()}></span>
                         <img
                             className={styles.img}
                             src={this.props.movie.posterUrl}
                             alt={`${this.props.movie.title}`}
                         />
                     </div>
-                    <figcaption >
+                    <figcaption>
                         <ul>
                             <li className={styles.title}>
                                 {this.props.movie.title}
