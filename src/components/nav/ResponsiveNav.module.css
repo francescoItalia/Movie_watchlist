@@ -9,84 +9,9 @@
   justify-content: space-between;
 }
 
-.nav {
-  display: flex;
-  flex-flow: column nowrap;
-  background-color: #1d77ce;
-  padding: 20px 20px;
-  height: 100vh;
-  z-index: 1;
-  position: relative;
-}
-
-.nav a {
-  display: block;
-  font-weight: 700;
-  font-size: 20px;
-  padding: 35px 0;
-  margin: 0;
-  line-height: 23px;
-  color: #F3F8FC;
-  border-bottom: 1px solid #ebebeb;
-}
-
-.show {
-  display: flex;
-}
-
-.hide {
-  display: none;
-}
-
-a[data-added] {
-  position: relative;
-}
-
-a[data-added]::before {
-  font-size: 0.6em;
-  position: absolute;
-  top: 30%;
-  left: 27%;
-  content: attr(data-added);
-  background-color: red;
-  width: 15px;
-  height: 15px;
-  text-align: center;
-  line-height: 1.3em;
-  border-radius: 50%;
-}
-
 @media screen and (min-width: 850px) { 
   .header {
     display: flex;
     justify-content: space-between;
-  }
-
-  .nav {
-    display: block;
-    font-size: 0.7rem;
-    margin: auto 0;
-    padding: 0;
-    height: max-content;
-    width: auto;
-    z-index: 0;
-    position: inherit;
-  }
-
-  .nav a {
-    display: inline;
-    margin-right: 3vw;
-    border-bottom: 0px;
-    padding: 0;
-  }
-
-  .nav a:last-child {
-    margin-right: 0px;
-  }
-
-  a[data-added]::before {
-    top: -4px;
-    right: -10px;
-    left: auto;
   }
 }
