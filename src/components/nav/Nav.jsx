@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import styles from './Nav.module.css';
 
 class Nav extends Component {
-    state = {}
     render() {
         return (
-            <nav className={`${styles.nav} ${this.props.showNav ? styles.show : styles.hide}`}>
+            <nav className={styles.nav}>
                 {this.props.routes.map((route, i) => {
                     const [routeData] = Object.entries(route); // Object.entries return an array of arrays
                     return (

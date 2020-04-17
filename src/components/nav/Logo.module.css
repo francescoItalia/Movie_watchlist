@@ -1,5 +1,6 @@
 .logo_container {
     margin-right: auto;
+    transition: transform 1s linear;
 }
 
 .mobileLogo{
@@ -34,16 +35,20 @@ i {
     border: solid #DDDDDF;
     border-width: 0 4px 4px 0;
     display: inline-block;
-    padding: 4px;
+    padding: 4px;    
+    transition: transform .4s ease;
   }
 
 .down {
     transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
 }
 
 .logo {
     display: none;
+}
+
+.flip {
+    transform: rotate(-45deg);
 }
 
 

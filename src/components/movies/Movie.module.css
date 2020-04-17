@@ -1,10 +1,10 @@
 .movie {
     position: relative;
     margin-bottom: 25px;
-    clear: left;
     margin:5px;
     box-shadow: rgba(0, 0, 0, 0.28) 0px 2px 8px;
     border-radius: 10px 10px 0 0;
+    z-index: -1;
   }
   
   .figure {

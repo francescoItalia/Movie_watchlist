@@ -2,17 +2,14 @@
 .nav {
     display: flex;
     flex-flow: column nowrap;
-    background-color: #1d77ce;
+    background-color: #fff;
     padding: 0px 20px;
-    height: 0px;
-    overflow: hidden;
-    z-index: 101;
+    z-index: 200; 
+    height: 100vh;
     position: absolute;
     left: 0;
     right: 0;
-    animation-name: slideInDown;
-    animation-name: slideInUp;
-    animation-duration: .5s;
+    transition: height 0.5s ease;
   }
   
   .nav a {
@@ -22,17 +19,8 @@
     padding: 35px 0;
     margin: 0;
     line-height: 23px;
-    color: #F3F8FC;
-    border-bottom: 1px solid #ebebeb;
-  }
-  
-  .show {
-    height: 1000px;
-  }
-  
-  .hide {
-    display: none;
-    height: 0px;
+    color: #3C434D;
+    border-bottom: 1px solid #3C434D;
   }
   
   a[data-added] {
@@ -46,6 +34,7 @@
     left: 27%;
     content: attr(data-added);
     background-color: red;
+    color: #fff;
     width: 15px;
     height: 15px;
     text-align: center;
@@ -57,6 +46,7 @@
     .nav {
       display: block;
       font-size: 0.7rem;
+      background-color: #1d77ce;
       margin: auto 0;
       padding: 0;
       height: max-content;
@@ -80,17 +70,6 @@
       top: -4px;
       right: -10px;
       left: auto;
-    }
-  }
-  
-  @keyframes slideInDown {
-    from {
-      transform: translate3d(0, -100%, 0);
-      visibility: visible;
-    }
-  
-    to {
-      transform: translate3d(0, 0, 0);
     }
   }
 
