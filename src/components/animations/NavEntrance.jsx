@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Slide.css'
+import './NavEntrance.css'
 
 class Slide extends Component {
     state = {
@@ -15,8 +15,8 @@ class Slide extends Component {
     render() {
         return (
             this.state.shouldRender && (
-                <div
-                    style={{ animation: `${this.props.show ? "slideInLeft" : "slideOutLeft"} .5s` }}
+                <div style={{ zIndex: 1000 }}
+                    className={this.props.show ? "slideInLeft" : "slideOutLeft"}
                     onAnimationEnd={this.onAnimationEnd}
                 >
                     {this.props.children}

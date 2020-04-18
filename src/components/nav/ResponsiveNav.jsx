@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
 import Nav from './Nav';
-import Slide from '../animations/Slide';
+import NavEntrance from '../animations/NavEntrance';
 import styles from './ResponsiveNav.module.css';
 
 
@@ -18,7 +18,7 @@ class ResponsiveNav extends Component {
                         <SearchBar filterMovies={this.props.filterMovies} />
                     </div>
                 </header>
-                <Slide show={this.props.showNav}>
+                <NavEntrance show={this.props.showNav}>
                     <Nav
                         routes={this.props.routes}
                         showNav={this.props.showNav}
@@ -26,7 +26,7 @@ class ResponsiveNav extends Component {
                         addedToWatchlist={this.props.addedToWatchlist}
                         addedToFavourites={this.props.addedToFavourites}
                     />
-                </Slide>
+                </NavEntrance>
             </>
         );
     }

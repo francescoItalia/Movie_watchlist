@@ -31,14 +31,6 @@
     border-radius: 50%;
 }
 
-i {
-    border: solid #DDDDDF;
-    border-width: 0 4px 4px 0;
-    display: inline-block;
-    padding: 4px;    
-    transition: transform .4s ease;
-  }
-
 .down {
     transform: rotate(45deg);
 }
@@ -47,9 +39,6 @@ i {
     display: none;
 }
 
-.flip {
-    transform: rotate(-45deg);
-}
 
 
 @media screen and (min-width: 850px) {

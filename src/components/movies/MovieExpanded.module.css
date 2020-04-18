@@ -1,7 +1,7 @@
 .movieExpanded {
     position: fixed;
     background: #dbdbdb;
-    z-index: 2002;
+    z-index: 101;
     top: 0;
     left: calc(-50vw + 50%);
     width: 100vw;

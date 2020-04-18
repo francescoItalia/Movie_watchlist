@@ -5,12 +5,14 @@ import styles from './Movie.module.css';
 import defaultImg from '../../static/404-error-for-img.gif';
 
 class Movie extends Component {
-    state = {
-        detailsShown: false
-    };
     render() {
         return (
-            <div className={styles.movie} onClick={() => this.props.showExpandedMovie(this.props.movie)}>
+            <div
+                className={styles.movie}
+                onClick={() => this.props.showExpandedMovie(this.props.movie)}
+                style={{ animation: `${this.props.removeFromList ? "slideInLeft" : null} .5s` }}
+                onAnimationEnd={this.onAnimationEnd}
+            >
                 <LikeButton
                     toggleFavourites={this.props.toggleFavourites}
                     id={this.props.movie.id}
@@ -33,23 +35,6 @@ class Movie extends Component {
                             /> : null
                         }
                     </div>
-                    <figcaption className={`${styles.figcaption} ${this.state.detailsShown ? styles.show : styles.hide}`}>
-                        <ul>
-                            <li>
-                                <span>Title: </span>
-                                {this.props.movie.title}
-                            </li>
-                            <li>
-                                <span>Genres: </span>
-                                {this.props.movie.genres.toString().replace(/,/g, ", ")}
-                            </li>
-                            <li>
-                                <span>Plot: </span>
-                                {this.props.movie.plot.substr(0, 65)}
-                                ...
-                            </li>
-                        </ul>
-                    </figcaption>
                 </figure>
             </div>
         );
@@ -58,10 +43,6 @@ class Movie extends Component {
     addDefaultSrc(ev) {
         ev.target.src = defaultImg;
     }
-
-    toggleDetails = () => {
-        this.setState({ detailsShown: !this.state.detailsShown });
-    };
 }
 
 export default Movie;

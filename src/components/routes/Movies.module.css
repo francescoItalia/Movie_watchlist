@@ -1,6 +1,7 @@
 .lists_container{
     width: 95%;
     margin: 0 auto;
+    z-index:-1;
   }
 
   @media screen and (mim-width: 850px) {
